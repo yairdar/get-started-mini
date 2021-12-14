@@ -1,0 +1,44 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  default:
+    cmds:
+      - task -l
+    silent: true
+  
+  install-lein-connector:
+    desc: install lein packer installer on ubuntu
+    cmds:
+      - |-
+        mkdir -p __tmp__
+        curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > __tmp__/lein
+        chmod +x __tmp__/lein
+        echo "@@act=report task={{.TASK}} msg='DONE. lein packer is fetched'"
+      - |
+        sudo mv __tmp__/lein /usr/local/bin/lein
+        echo "@@act=report task={{.TASK}} msg='DONE. lein packer is installed'"
+      - lein
+
+  install-clj-connector:
+    desc: install clj cli tool
+    cmds:
+      - sudo apt-get install -y bash curl rlwrap
+      - curl -O https://download.clojure.org/install/linux-install-1.10.2.774.sh
+      - chmod +x linux-install-1.10.2.774.sh
+      - sudo ./linux-install-1.10.2.774.sh
+      - clj
+
+
+  install-gh-tool:
+    desc: install github cli tool
+    dir: __tmp__
+    cmds:
+      - wget https://github.com/cli/cli/releases/download/v2.3.0/gh_2.3.0_linux_amd64.tar.gz
+
+
+
