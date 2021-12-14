@@ -1,0 +1,22 @@
+#!/usr/local/bin/task --taskfile
+
+# https://taskfile.dev
+
+version: "3"
+includes:
+  packer-conda: install_conda_mini.tasks.yml
+  # packer-asdf: install_asdf_packer.tasks.yml
+
+tasks:
+
+  install-all:
+    desc: "install high level package managers conda-with-mamba asdf github http"
+    cmds:
+     - task: install-packer-conda-with-mamba
+    #  - task: install-packer-asdf 
+    #  - task: install-packer-github
+
+  install-packer-conda-with-mamba:
+    desc: install miniconda with mamba
+    cmds:
+      - conda-packer:install-all
